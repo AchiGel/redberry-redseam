@@ -1,8 +1,8 @@
 import { API_URL } from "../../../main";
 
-export const getAllProducts = async () => {
+export const getAllProducts = async (page: number = 1) => {
   try {
-    const response = await fetch(`${API_URL}/products`);
+    const response = await fetch(`${API_URL}/products?page=${page}`);
     const data = await response.json();
     return data;
   } catch (error) {

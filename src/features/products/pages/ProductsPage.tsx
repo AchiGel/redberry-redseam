@@ -3,14 +3,15 @@ import { getAllProducts } from "../services/productsApi";
 import ProductsHeading from "../../../components/ProductsHeading";
 import ProductsGrid from "../../../components/ProductsGrid";
 import Pagination from "../../../components/Pagination";
+import { useState } from "react";
 
 const ProductsPage = () => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["products"],
-    queryFn: getAllProducts,
-  });
+  const [currentPage, setCurrentPage] = useState(1);
 
-  console.log(data, isError, isLoading);
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["products", currentPage],
+    queryFn: () => getAllProducts(currentPage),
+  });
 
   return (
     <div className="flex flex-col gap-8 mt-18">
@@ -22,7 +23,13 @@ const ProductsPage = () => {
       ) : (
         <ProductsGrid products={data} />
       )}
-      <Pagination />
+      {isError ? (
+        <div>Failed to load products</div>
+      ) : isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <Pagination meta={data.meta} onPageChange={setCurrentPage} />
+      )}
     </div>
   );
 };
