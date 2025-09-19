@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import AuthButton from "../../../components/AuthButton";
 
 const LoginPage = () => {
   return (
@@ -10,11 +11,9 @@ const LoginPage = () => {
           <input type="text" placeholder="Password" />
         </div>
 
-        <button className="bg-[#FF4000] px-5 py-[10px] rounded-[10px] text-white text-sm">
-          Log in
-        </button>
+        <AuthButton type="Log in" />
       </form>
-      <span className="flex items-center gap-2 text-[#3E424A] text-sm">
+      <span className="flex items-center self-center gap-2 text-[#3E424A] text-sm">
         Not a member?
         <Link className="font-medium text-[#FF4000]" to={"/register"}>
           Register
