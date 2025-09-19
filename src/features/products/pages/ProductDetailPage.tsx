@@ -20,17 +20,25 @@ const ProductDetailPage = () => {
   return (
     <div className="flex justify-between items-center">
       {/* gallery */}
-      <div className="flex flex-1 gap-6 basis-1/2">
-        <div className="flex flex-col gap-[9px]">
+      {/* gallery */}
+      <div className="flex items-start gap-6 basis-1/2">
+        {/* thumbnails */}
+        <div className="flex flex-col gap-3 w-[121px] shrink-0">
           {data?.images.map((image, index) => (
-            <div className="max-w-[121px]" key={index}>
-              <img className="w-full h-full object-cover" src={image} alt="" />
+            <div key={index} className="w-full h-[161px]">
+              <img
+                className="rounded-md w-full h-full object-cover"
+                src={image}
+                alt=""
+              />
             </div>
           ))}
         </div>
-        <div className="max-w-[703px]">
+
+        {/* main image */}
+        <div className="flex-1 max-w-[703px]">
           <img
-            className="w-full h-full object-cover"
+            className="rounded-lg w-full h-full object-cover"
             src={data?.cover_image}
             alt="cover image"
           />
