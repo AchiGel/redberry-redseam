@@ -14,6 +14,7 @@ import RegisterPage from "./features/auth/pages/RegisterPage.tsx";
 import ProductsPage from "./features/products/pages/ProductsPage.tsx";
 import { AuthProvider } from "./providers/AuthProvider.tsx";
 import { PrivateRoute } from "./routes/PrivateRoute.tsx";
+import ProductDetailPage from "./features/products/pages/ProductDetailPage.tsx";
 
 export const API_URL = "https://api.redseam.redberryinternship.ge/api";
 
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
       <Route element={<PrivateRoute />}>
         <Route element={<App />}>
           <Route path="/" element={<ProductsPage />} />
+          <Route path="/:id" element={<ProductDetailPage />} />
         </Route>
       </Route>
     </>

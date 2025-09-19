@@ -10,6 +10,7 @@ const ProductsGrid = ({ products }: { products: ProductsResponse }) => {
           image={item.cover_image}
           title={item.name}
           price={item.price}
+          id={item.id}
         />
       ))}
     </div>
