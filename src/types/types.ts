@@ -60,3 +60,20 @@ export type ProductsResponse = {
   links: PaginationLinks;
   meta: PaginationMeta;
 };
+
+export type UserType = {
+  id: number;
+  username: string;
+  email: string;
+  is_admin: number;
+  remember_token: string | null;
+  avatar: string | null;
+};
+
+export type AuthContextType = {
+  user: UserType | null;
+  token: string | null;
+  loading: boolean;
+  login: (user: UserType, token: string) => void;
+  logout: () => void;
+};
