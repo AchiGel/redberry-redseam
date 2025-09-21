@@ -22,7 +22,7 @@ const GridCard = ({
           />
         </div>
 
-        <div className="flex flex-col gap-0.5 font-medium text-[#10151F]">
+        <div className="flex flex-col gap-0.5 font-medium text-Dark-blue">
           <h3 className="text-lg">{title}</h3>
           <p className="text-base">$ {price}</p>
         </div>

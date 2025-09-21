@@ -25,7 +25,7 @@ const LoginPage = () => {
 
   return (
     <div className="flex flex-col mr-[245px] ml-[173px] w-full">
-      <h1 className="mb-12 font-semibold text-[#10151F] text-[42px]">Log in</h1>
+      <h1 className="mb-12 font-semibold text-[42px] text-Dark-blue">Log in</h1>
       <form className="flex flex-col gap-[46px] mb-6" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-6">
           <input
@@ -44,9 +44,9 @@ const LoginPage = () => {
 
         <AuthButton buttonType="Log in" />
       </form>
-      <span className="flex items-center self-center gap-2 text-[#3E424A] text-sm">
+      <span className="flex items-center self-center gap-2 text-Dark-blue-2 text-sm">
         Not a member?
-        <Link className="font-medium text-[#FF4000]" to={"/register"}>
+        <Link className="font-medium text-Red" to={"/register"}>
           Register
         </Link>
       </span>

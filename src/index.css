@@ -5,3 +5,11 @@
 body {
   font-family: "Poppins", sans-serif;
 }
+
+@theme {
+  --color-Dark-blue: #10151f;
+  --color-Dark-blue-2: #3e424a;
+  --color-Red: #ff4000;
+  --color-Grey: #f8f6f7;
+  --color-Dark-Grey-400: #212b36;
+}

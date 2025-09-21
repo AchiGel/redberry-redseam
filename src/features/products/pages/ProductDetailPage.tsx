@@ -49,10 +49,10 @@ const ProductDetailPage = () => {
       <div className="flex flex-col flex-1 gap-14 max-w-[704px] basis-1/2">
         {/* name and price */}
         <div>
-          <h1 className="font-semibold text-[#10151F] text-[32px]">
+          <h1 className="font-semibold text-[32px] text-Dark-blue">
             {data?.name}
           </h1>
-          <h2 className="font-semibold text-[#10151F] text-[32px]">
+          <h2 className="font-semibold text-[32px] text-Dark-blue">
             $ {data?.price}
           </h2>
         </div>
@@ -88,7 +88,7 @@ const ProductDetailPage = () => {
           </div>
         </div>
         {/* button */}
-        <button className="bg-[#FF4000]">Add to cart</button>
+        <button className="bg-Red">Add to cart</button>
         <hr className="bg-[#E1DFE1] h-[1px]" />
         {/* details */}
         <div>

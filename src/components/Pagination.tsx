@@ -30,8 +30,8 @@ const Pagination = ({ meta, onPageChange }: PaginationProps) => {
           onClick={() => onPageChange(page)}
           className={`px-3 py-1 rounded ${
             page === current_page
-              ? "border border-[#FF4000] text-[#FF4000] cursor-pointer"
-              : "border border-[#F8F6F7] text-[#212B36]/60 cursor-pointer"
+              ? "border border-Red text-Red cursor-pointer"
+              : "border border-Grey text-Dark-Grey-400 cursor-pointer"
           }`}
         >
           {page}
