@@ -77,3 +77,28 @@ export type AuthContextType = {
   login: (user: UserType, token: string) => void;
   logout: () => void;
 };
+
+export type AuthResponse = {
+  user: {
+    id: number;
+    username: string;
+    email: string;
+    is_admin: number;
+    remember_token: string | null;
+    avatar: string | null;
+  };
+  token: string;
+};
+
+export type LoginData = {
+  email: string;
+  password: string;
+};
+
+export type RegisterData = {
+  avatar?: File | null;
+  email: string;
+  password: string;
+  password_confirmation: string;
+  username: string;
+};

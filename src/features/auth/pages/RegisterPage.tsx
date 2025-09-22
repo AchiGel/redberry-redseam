@@ -1,22 +1,41 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthButton from "../../../components/AuthButton";
 import { useState } from "react";
+import { registerApi } from "../services/authApi";
 
 const RegisterPage = () => {
-  const [avatar, setAvatar] = useState("");
+  const [avatar, setAvatar] = useState<File | null>(null);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(email, password, username, confirmPassword, avatar);
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
-    setUsername("");
-    setAvatar("");
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    try {
+      const data = await registerApi({
+        avatar,
+        email,
+        username,
+        password,
+        password_confirmation: confirmPassword,
+      });
+
+      if (data) {
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error(error);
+      alert(error || "Registration failed");
+    }
   };
 
   return (
@@ -26,7 +45,14 @@ const RegisterPage = () => {
       </h1>
       <form className="flex flex-col gap-[46px] mb-6" onSubmit={handleSubmit}>
         <div>
-          <input type="file" />
+          <input
+            type="file"
+            onChange={(e) => {
+              if (e.target.files?.[0]) {
+                setAvatar(e.target.files[0]);
+              }
+            }}
+          />
         </div>
 
         <div className="flex flex-col gap-6">
