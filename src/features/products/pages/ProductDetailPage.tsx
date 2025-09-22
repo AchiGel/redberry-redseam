@@ -16,6 +16,7 @@ const ProductDetailPage = () => {
 
   const [chosenSize, setChosenSize] = useState("");
   const [chosenQuantity, setChosenQuantity] = useState<null | number>(null);
+  const [chosenColor, setChosenColor] = useState("");
 
   const { data, isLoading, isError } = useQuery<ProductTypes>({
     queryKey: ["product", id],
@@ -53,6 +54,8 @@ const ProductDetailPage = () => {
             <ProductColors
               productColor={data?.color}
               availableColors={data?.available_colors}
+              chosenColor={chosenColor}
+              setChosenColor={setChosenColor}
             />
             {/* size section */}
             <ProductSizes

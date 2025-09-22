@@ -15,7 +15,7 @@ export type ProductTypes = {
   };
   total_price: number;
   quantity: number;
-  color: string;
+  color: "Default";
   size: string;
 };
 

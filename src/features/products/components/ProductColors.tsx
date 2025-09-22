@@ -1,19 +1,39 @@
+import { useEffect } from "react";
+
 const ProductColors = ({
   productColor,
   availableColors,
+  chosenColor,
+  setChosenColor,
 }: {
-  productColor: string | undefined;
+  productColor: "Default" | undefined;
   availableColors: string[] | undefined;
+  chosenColor: string;
+  setChosenColor: React.Dispatch<React.SetStateAction<string>>;
 }) => {
+  useEffect(() => {
+    if (availableColors && productColor && productColor === "Default")
+      setChosenColor(availableColors[0]);
+  }, [productColor, setChosenColor, availableColors]);
+
   return (
     <div className="flex flex-col gap-4">
-      <span className="text-Dark-blue">Color: {productColor}</span>
+      <span className="text-Dark-blue">Color: {chosenColor}</span>
       <div className="flex items-center gap-[13px]">
         {availableColors &&
-          availableColors.map((color, index) => (
-            <div key={index} className="">
-              {color}
-            </div>
+          availableColors.map((color) => (
+            <button
+              key={color}
+              onClick={() => setChosenColor(color)}
+              className={`w-12 h-12 rounded-full bg-white p-[5px] border  overflow-hidden ${
+                chosenColor === color ? "border-Grey-2" : "border-none"
+              }`}
+            >
+              <div
+                className="rounded-full w-full h-full"
+                style={{ backgroundColor: color }}
+              ></div>
+            </button>
           ))}
       </div>
     </div>
