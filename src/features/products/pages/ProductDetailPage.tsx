@@ -15,6 +15,7 @@ const ProductDetailPage = () => {
   const { id } = useParams<{ id: string }>();
 
   const [chosenSize, setChosenSize] = useState("");
+  const [chosenQuantity, setChosenQuantity] = useState<null | number>(null);
 
   const { data, isLoading, isError } = useQuery<ProductTypes>({
     queryKey: ["product", id],
@@ -61,7 +62,11 @@ const ProductDetailPage = () => {
               setChosenSize={setChosenSize}
             />
             {/* quantity section */}
-            <ProductQuantity />
+            <ProductQuantity
+              productQuantity={data?.quantity}
+              chosenQuantity={chosenQuantity}
+              setChosenQuantity={setChosenQuantity}
+            />
           </div>
           {/* button */}
           <AddToCardButton />
