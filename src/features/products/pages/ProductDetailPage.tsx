@@ -9,9 +9,12 @@ import ProductSizes from "../components/ProductSizes";
 import ProductColors from "../components/ProductColors";
 import ProductNameAndPrice from "../components/ProductNameAndPrice";
 import ProductGallery from "../components/ProductGallery";
+import { useState } from "react";
 
 const ProductDetailPage = () => {
   const { id } = useParams<{ id: string }>();
+
+  const [chosenSize, setChosenSize] = useState("");
 
   const { data, isLoading, isError } = useQuery<ProductTypes>({
     queryKey: ["product", id],
@@ -21,6 +24,8 @@ const ProductDetailPage = () => {
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Failed to load product</div>;
+
+  console.log(data);
 
   return (
     <div className="flex flex-col">
@@ -42,7 +47,7 @@ const ProductDetailPage = () => {
             productPrice={data?.price}
           />
           {/* tech details */}
-          <div>
+          <div className="flex flex-col gap-12">
             {/* color section */}
             <ProductColors
               productColor={data?.color}
@@ -52,13 +57,15 @@ const ProductDetailPage = () => {
             <ProductSizes
               productSize={data?.size}
               availableSizes={data?.available_sizes}
+              chosenSize={chosenSize}
+              setChosenSize={setChosenSize}
             />
             {/* quantity section */}
             <ProductQuantity />
           </div>
           {/* button */}
           <AddToCardButton />
-          <hr className="border border-[#E1DFE1]" />
+          <hr className="border border-Grey-2" />
           {/* details */}
           <ProductDetails
             image={data?.brand.image}

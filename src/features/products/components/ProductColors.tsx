@@ -6,8 +6,8 @@ const ProductColors = ({
   availableColors: string[] | undefined;
 }) => {
   return (
-    <div>
-      <span>Color: {productColor}</span>
+    <div className="flex flex-col gap-4">
+      <span className="text-Dark-blue">Color: {productColor}</span>
       <div className="flex items-center gap-[13px]">
         {availableColors &&
           availableColors.map((color, index) => (

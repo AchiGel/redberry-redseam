@@ -6,7 +6,7 @@ const ProductsHeading = () => {
         <span className="text-Dark-blue-2 text-xs">
           Showing 1–10 of 100 results
         </span>
-        <div className="bg-[#E1DFE1] w-[1px] h-[14px]"></div>
+        <div className="bg-Grey-2 w-[1px] h-[14px]"></div>
         <div className="flex items-center gap-2">
           <img src="/images/adjustments-horizontal.svg" alt="" />
           <span className="text-Dark-blue">Filter</span>
