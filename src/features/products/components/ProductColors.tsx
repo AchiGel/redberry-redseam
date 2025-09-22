@@ -12,7 +12,11 @@ const ProductColors = ({
   setChosenColor: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   useEffect(() => {
-    if (availableColors && productColor && productColor === "Default")
+    if (
+      availableColors &&
+      productColor &&
+      (productColor === "Default" || productColor)
+    )
       setChosenColor(availableColors[0]);
   }, [productColor, setChosenColor, availableColors]);
 
@@ -30,7 +34,9 @@ const ProductColors = ({
               }`}
             >
               <div
-                className="rounded-full w-full h-full"
+                className={`rounded-full w-full h-full ${
+                  color === "White" && "border-Grey-2 border"
+                }`}
                 style={{ backgroundColor: color }}
               ></div>
             </button>

@@ -39,6 +39,9 @@ const ProductDetailPage = () => {
         <ProductGallery
           productImages={data?.images}
           coverImage={data?.cover_image}
+          availableColors={data?.available_colors}
+          chosenColor={chosenColor}
+          setChosenColor={setChosenColor}
         />
 
         {/* product info */}
