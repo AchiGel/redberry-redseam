@@ -1,6 +1,22 @@
 import HeadingFilterSection from "./HeadingFilterSection";
 import HeadingSortSection from "./HeadingSortSection";
 
+interface ProductsHeadingProps {
+  totalProducts: number | undefined;
+  from: number | undefined;
+  to: number | undefined;
+  filterIsOpened: boolean;
+  setFilterIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  sortIsOpened: boolean;
+  setSortIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  sort: string | undefined;
+  setSort: React.Dispatch<React.SetStateAction<string | undefined>>;
+  filters: { price_from?: number; price_to?: number };
+  setFilters: React.Dispatch<
+    React.SetStateAction<{ price_from?: number; price_to?: number }>
+  >;
+}
+
 const ProductsHeading = ({
   totalProducts,
   from,
@@ -9,15 +25,10 @@ const ProductsHeading = ({
   setFilterIsOpened,
   sortIsOpened,
   setSortIsOpened,
-}: {
-  totalProducts: number | undefined;
-  from: number | undefined;
-  to: number | undefined;
-  filterIsOpened: boolean;
-  setFilterIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
-  sortIsOpened: boolean;
-  setSortIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+  setSort,
+  filters,
+  setFilters,
+}: ProductsHeadingProps) => {
   return (
     <div className="flex justify-between items-center">
       <h2 className="font-semibold text-[42px] text-Dark-blue">Products</h2>
@@ -31,12 +42,15 @@ const ProductsHeading = ({
           filterIsOpened={filterIsOpened}
           setFilterIsOpened={setFilterIsOpened}
           setSortIsOpened={setSortIsOpened}
+          filters={filters}
+          setFilters={setFilters}
         />
         {/* Sort Section */}
         <HeadingSortSection
           setFilterIsOpened={setFilterIsOpened}
           sortIsOpened={sortIsOpened}
           setSortIsOpened={setSortIsOpened}
+          setSort={setSort}
         />
       </div>
     </div>

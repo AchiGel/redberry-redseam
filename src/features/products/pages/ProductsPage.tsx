@@ -12,15 +12,24 @@ const ProductsPage = () => {
   const [filterIsOpened, setFilterIsOpened] = useState(false);
   const [sortIsOpened, setSortIsOpened] = useState(false);
 
+  const [sort, setSort] = useState<string | undefined>(undefined);
+  const [filters, setFilters] = useState<{
+    price_from?: number;
+    price_to?: number;
+  }>({});
+
   const { data, isLoading, isError } = useQuery<ProductsResponse>({
-    queryKey: ["products", currentPage],
-    queryFn: () => getAllProducts(currentPage),
+    queryKey: ["products", currentPage, sort, filters],
+    queryFn: () =>
+      getAllProducts({
+        page: currentPage,
+        sort,
+        filter: filters,
+      }),
   });
 
   if (isError) return <div>Failed to load products</div>;
   if (isLoading) return <div>Loading...</div>;
-
-  console.log(data);
 
   return (
     <div className="flex flex-col gap-8 mt-18">
@@ -32,6 +41,10 @@ const ProductsPage = () => {
         setFilterIsOpened={setFilterIsOpened}
         sortIsOpened={sortIsOpened}
         setSortIsOpened={setSortIsOpened}
+        sort={sort}
+        setSort={setSort}
+        filters={filters}
+        setFilters={setFilters}
       />
       <ProductsGrid products={data!} />
       <Pagination meta={data!.meta} onPageChange={setCurrentPage} />
