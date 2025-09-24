@@ -102,3 +102,34 @@ export type RegisterData = {
   password_confirmation: string;
   username: string;
 };
+
+export interface ProductsHeadingProps {
+  totalProducts: number | undefined;
+  from: number | undefined;
+  to: number | undefined;
+  filterIsOpened: boolean;
+  setFilterIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  sortIsOpened: boolean;
+  setSortIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  sort: string | undefined;
+  setSort: (newSort: string | undefined) => void;
+  filters: { price_from?: number; price_to?: number };
+  setFilters: (newFilters: { price_from?: number; price_to?: number }) => void;
+}
+
+export interface ProductQueryParams {
+  page?: number;
+  sort?: string;
+  filter?: {
+    price_from?: number;
+    price_to?: number;
+  };
+}
+
+export type PaginationProps = {
+  meta: {
+    current_page: number;
+    last_page: number;
+  };
+  onPageChange: (page: number) => void;
+};

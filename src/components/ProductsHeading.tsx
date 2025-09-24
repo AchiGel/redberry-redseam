@@ -1,19 +1,6 @@
+import type { ProductsHeadingProps } from "../types/types";
 import HeadingFilterSection from "./HeadingFilterSection";
 import HeadingSortSection from "./HeadingSortSection";
-
-interface ProductsHeadingProps {
-  totalProducts: number | undefined;
-  from: number | undefined;
-  to: number | undefined;
-  filterIsOpened: boolean;
-  setFilterIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
-  sortIsOpened: boolean;
-  setSortIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
-  sort: string | undefined;
-  setSort: (newSort: string | undefined) => void;
-  filters: { price_from?: number; price_to?: number };
-  setFilters: (newFilters: { price_from?: number; price_to?: number }) => void;
-}
 
 const ProductsHeading = ({
   totalProducts,

@@ -1,10 +1,4 @@
-type PaginationProps = {
-  meta: {
-    current_page: number;
-    last_page: number;
-  };
-  onPageChange: (page: number) => void;
-};
+import type { PaginationProps } from "../types/types";
 
 const Pagination = ({ meta, onPageChange }: PaginationProps) => {
   const { current_page, last_page } = meta;

@@ -1,13 +1,5 @@
 import { API_URL } from "../../../main";
-
-interface ProductQueryParams {
-  page?: number;
-  sort?: string;
-  filter?: {
-    price_from?: number;
-    price_to?: number;
-  };
-}
+import type { ProductQueryParams } from "../../../types/types";
 
 export const getAllProducts = async (params: ProductQueryParams = {}) => {
   try {
