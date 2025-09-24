@@ -65,7 +65,7 @@ const RegisterPage = () => {
             <input
               className="px-3 py-[10.5px] border border-Grey-2 rounded-lg w-full text-sm"
               type="text"
-              value={email}
+              value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CartModal from "./CartModal";
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
@@ -6,6 +6,7 @@ import { useAuth } from "../hooks/useAuth";
 const Header = () => {
   const [cartIsOpened, setCartIsOpened] = useState(false);
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <header className="relative flex justify-between items-center px-25 py-[10px] h-20">
@@ -41,7 +42,10 @@ const Header = () => {
           </button>
         </div>
       ) : (
-        <button className="flex items-center gap-2 font-medium text-Dark-blue text-xs cursor-pointer">
+        <button
+          onClick={() => navigate("/login")}
+          className="flex items-center gap-2 font-medium text-Dark-blue text-xs cursor-pointer"
+        >
           <img src="/images/Union.svg" alt="login" />
           <span>Log in</span>
         </button>
