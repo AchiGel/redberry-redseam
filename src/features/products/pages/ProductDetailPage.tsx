@@ -10,9 +10,12 @@ import ProductColors from "../components/ProductColors";
 import ProductNameAndPrice from "../components/ProductNameAndPrice";
 import ProductGallery from "../components/ProductGallery";
 import { useState } from "react";
+import { useAuth } from "../../../hooks/useAuth";
 
 const ProductDetailPage = () => {
   const { id } = useParams<{ id: string }>();
+
+  const { user } = useAuth();
 
   const [chosenSize, setChosenSize] = useState("");
   const [chosenQuantity, setChosenQuantity] = useState<null | number>(null);
@@ -75,7 +78,7 @@ const ProductDetailPage = () => {
             />
           </div>
           {/* button */}
-          <AddToCardButton />
+          <AddToCardButton user={user} />
           <hr className="border border-Grey-2" />
           {/* details */}
           <ProductDetails
