@@ -7,7 +7,7 @@ const HeadingSortSection = ({
   setFilterIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
   sortIsOpened: boolean;
   setSortIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
-  setSort: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setSort: (newSort: string | undefined) => void;
 }) => {
   const handleSelect = (value: string) => {
     setSort(value);

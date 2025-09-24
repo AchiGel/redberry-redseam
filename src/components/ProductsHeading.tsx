@@ -10,11 +10,9 @@ interface ProductsHeadingProps {
   sortIsOpened: boolean;
   setSortIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
   sort: string | undefined;
-  setSort: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setSort: (newSort: string | undefined) => void;
   filters: { price_from?: number; price_to?: number };
-  setFilters: React.Dispatch<
-    React.SetStateAction<{ price_from?: number; price_to?: number }>
-  >;
+  setFilters: (newFilters: { price_from?: number; price_to?: number }) => void;
 }
 
 const ProductsHeading = ({

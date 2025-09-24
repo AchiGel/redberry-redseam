@@ -11,9 +11,7 @@ const HeadingFilterSection = ({
   setFilterIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
   setSortIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
   filters: { price_from?: number; price_to?: number };
-  setFilters: React.Dispatch<
-    React.SetStateAction<{ price_from?: number; price_to?: number }>
-  >;
+  setFilters: (newFilters: { price_from?: number; price_to?: number }) => void;
 }) => {
   const [priceFrom, setPriceFrom] = useState<string>(
     filters.price_from?.toString() || ""

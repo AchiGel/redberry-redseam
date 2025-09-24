@@ -5,18 +5,59 @@ import ProductsGrid from "../../../components/ProductsGrid";
 import Pagination from "../../../components/Pagination";
 import { useState } from "react";
 import type { ProductsResponse } from "../../../types/types";
+import { useSearchParams } from "react-router-dom";
 
 const ProductsPage = () => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const currentPage = Number(searchParams.get("page") || 1);
+  const sort = searchParams.get("sort") || undefined;
+  const filters = {
+    price_from: searchParams.get("price_from")
+      ? Number(searchParams.get("price_from"))
+      : undefined,
+    price_to: searchParams.get("price_to")
+      ? Number(searchParams.get("price_to"))
+      : undefined,
+  };
+
+  const handlePageChange = (page: number) => {
+    searchParams.set("page", page.toString());
+    setSearchParams(searchParams);
+  };
+
+  const handleSortChange = (newSort: string | undefined) => {
+    searchParams.set("page", "1");
+    if (newSort) {
+      searchParams.set("sort", newSort);
+    } else {
+      searchParams.delete("sort");
+    }
+    setSearchParams(searchParams);
+  };
+
+  const handleFiltersChange = (newFilters: {
+    price_from?: number;
+    price_to?: number;
+  }) => {
+    searchParams.set("page", "1");
+    if (newFilters.price_from !== undefined) {
+      searchParams.set("price_from", newFilters.price_from.toString());
+    } else {
+      searchParams.delete("price_from");
+    }
+
+    if (newFilters.price_to !== undefined) {
+      searchParams.set("price_to", newFilters.price_to.toString());
+    } else {
+      searchParams.delete("price_to");
+    }
+
+    setSearchParams(searchParams);
+  };
 
   const [filterIsOpened, setFilterIsOpened] = useState(false);
   const [sortIsOpened, setSortIsOpened] = useState(false);
-
-  const [sort, setSort] = useState<string | undefined>(undefined);
-  const [filters, setFilters] = useState<{
-    price_from?: number;
-    price_to?: number;
-  }>({});
 
   const { data, isLoading, isError } = useQuery<ProductsResponse>({
     queryKey: ["products", currentPage, sort, filters],
@@ -42,12 +83,12 @@ const ProductsPage = () => {
         sortIsOpened={sortIsOpened}
         setSortIsOpened={setSortIsOpened}
         sort={sort}
-        setSort={setSort}
+        setSort={handleSortChange}
         filters={filters}
-        setFilters={setFilters}
+        setFilters={handleFiltersChange}
       />
       <ProductsGrid products={data!} />
-      <Pagination meta={data!.meta} onPageChange={setCurrentPage} />
+      <Pagination meta={data!.meta} onPageChange={handlePageChange} />
     </div>
   );
 };
