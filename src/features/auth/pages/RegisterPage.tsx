@@ -1,27 +1,30 @@
 import { Link, useNavigate } from "react-router-dom";
 import AuthButton from "../../../components/AuthButton";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { registerApi } from "../services/authApi";
 import AvatarUploader from "../components/AvatarUploader";
+import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 
 const RegisterPage = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [avatar, setAvatar] = useState<File | null>(null);
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const isFocused = inputRef.current === document.activeElement;
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FieldValues>();
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const username = watch("username");
+  const email = watch("email");
+  const password = watch("password");
+  const confirmPassword = watch("confirmPassword");
 
-    if (password !== confirmPassword) {
+  const onSubmit: SubmitHandler<FieldValues> = async (formData) => {
+    if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match");
       return;
     }
@@ -29,10 +32,10 @@ const RegisterPage = () => {
     try {
       const data = await registerApi({
         avatar,
-        email,
-        username,
-        password,
-        password_confirmation: confirmPassword,
+        email: formData.email,
+        username: formData.username,
+        password: formData.password,
+        password_confirmation: formData.confirmPassword,
       });
 
       if (data) {
@@ -40,7 +43,7 @@ const RegisterPage = () => {
       }
     } catch (error) {
       console.error(error);
-      alert(error || "Registration failed");
+      alert("Registration failed");
     }
   };
 
@@ -49,7 +52,10 @@ const RegisterPage = () => {
       <h1 className="mb-12 font-semibold text-[42px] text-Dark-blue">
         Registration
       </h1>
-      <form className="flex flex-col gap-[46px] mb-6" onSubmit={handleSubmit}>
+      <form
+        className="flex flex-col gap-[46px] mb-6"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         {/* Avatar */}
         <AvatarUploader avatar={avatar} setAvatar={setAvatar} />
 
@@ -58,45 +64,70 @@ const RegisterPage = () => {
           <div className="relative w-full">
             <label
               className={`absolute text-sm left-3 top-1/2 -translate-y-1/2 text-Dark-blue-2 pointer-events-none transition-all duration-200
-          ${username || isFocused ? "opacity-0" : "opacity-100"}`}
+          ${username ? "opacity-0" : "opacity-100"}`}
             >
               username <span className="text-Red">*</span>
             </label>
             <input
-              className="px-3 py-[10.5px] border border-Grey-2 rounded-lg w-full text-sm"
+              className={`px-3 py-[10.5px] border  rounded-lg w-full text-sm ${
+                errors.username ? "border-Red" : "border-Grey-2"
+              }`}
               type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              {...register("username", {
+                required: "Username is required",
+                minLength: { value: 3, message: "At least 3 characters" },
+              })}
             />
+            {errors.username && (
+              <p className="top-[46px] left-[6px] absolute font-light text-[10px] text-Red">
+                {errors.username.message as string}
+              </p>
+            )}
           </div>
           {/* Email */}
           <div className="relative w-full">
             <label
               className={`absolute text-sm left-3 top-1/2 -translate-y-1/2 text-Dark-blue-2 pointer-events-none transition-all duration-200
-          ${email || isFocused ? "opacity-0" : "opacity-100"}`}
+          ${email ? "opacity-0" : "opacity-100"}`}
             >
               Email <span className="text-Red">*</span>
             </label>
             <input
-              className="px-3 py-[10.5px] border border-Grey-2 rounded-lg w-full text-sm"
+              className={`px-3 py-[10.5px] border  rounded-lg w-full text-sm ${
+                errors.email ? "border-Red" : "border-Grey-2"
+              }`}
               type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Enter a valid email",
+                },
+              })}
             />
+            {errors.email && (
+              <p className="top-[46px] left-[6px] absolute font-light text-[10px] text-Red">
+                {errors.email.message as string}
+              </p>
+            )}
           </div>
           {/* Password */}
           <div className="relative w-full">
             <label
               className={`absolute text-sm left-3 top-1/2 -translate-y-1/2 text-Dark-blue-2 pointer-events-none transition-all duration-200
-          ${password || isFocused ? "opacity-0" : "opacity-100"}`}
+          ${password ? "opacity-0" : "opacity-100"}`}
             >
               Password <span className="text-Red">*</span>
             </label>
             <input
-              className="py-[10.5px] pr-10 pl-3 border border-Grey-2 rounded-lg w-full text-sm"
+              className={`px-3 py-[10.5px] border  rounded-lg w-full text-sm ${
+                errors.password ? "border-Red" : "border-Grey-2"
+              }`}
               type={`${isVisible ? "text" : "password"}`}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              {...register("password", {
+                required: "Password is required",
+                minLength: { value: 3, message: "At least 3 characters" },
+              })}
             />
             <button
               type="button"
@@ -108,20 +139,30 @@ const RegisterPage = () => {
             >
               <img src="/images/eye.svg" alt="" />
             </button>
+            {errors.password && (
+              <p className="top-[46px] left-[6px] absolute font-light text-[10px] text-Red">
+                {errors.password.message as string}
+              </p>
+            )}
           </div>
           {/* Confirm password */}
           <div className="relative w-full">
             <label
               className={`absolute text-sm left-3 top-1/2 -translate-y-1/2 text-Dark-blue-2 pointer-events-none transition-all duration-200
-          ${confirmPassword || isFocused ? "opacity-0" : "opacity-100"}`}
+          ${confirmPassword ? "opacity-0" : "opacity-100"}`}
             >
               Confirm password <span className="text-Red">*</span>
             </label>
             <input
-              className="py-[10.5px] pr-10 pl-3 border border-Grey-2 rounded-lg w-full text-sm"
+              className={`px-3 py-[10.5px] border  rounded-lg w-full text-sm ${
+                errors.confirmPassword ? "border-Red" : "border-Grey-2"
+              }`}
               type={`${isVisible ? "text" : "password"}`}
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              {...register("confirmPassword", {
+                required: "Please confirm your password",
+                validate: (value) =>
+                  value === password || "Passwords do not match",
+              })}
             />
             <button
               type="button"
@@ -133,6 +174,11 @@ const RegisterPage = () => {
             >
               <img src="/images/eye.svg" alt="" />
             </button>
+            {errors.confirmPassword && (
+              <p className="top-[46px] left-[6px] absolute font-light text-[10px] text-Red">
+                {errors.confirmPassword.message as string}
+              </p>
+            )}
           </div>
         </div>
 
