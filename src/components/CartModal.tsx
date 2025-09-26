@@ -19,6 +19,13 @@ const CartModal = ({
     queryFn: () => getCartItems(token),
   });
 
+  if (isLoading)
+    return <div className="top-0 right-0 z-20 absolute">Is Loading</div>;
+  if (isError)
+    return (
+      <div className="top-0 right-0 z-20 absolute">Error fetching data</div>
+    );
+
   return (
     <div
       onClick={() => setCartIsOpened(false)}
@@ -30,7 +37,7 @@ const CartModal = ({
       >
         <div className="flex justify-between items-center">
           <h3 className="font-medium text-Dark-blue text-xl">
-            Shopping cart (0)
+            Shopping cart ({data.length})
           </h3>
           <button
             onClick={() => setCartIsOpened(false)}
@@ -40,14 +47,14 @@ const CartModal = ({
           </button>
         </div>
         <div className="flex flex-col flex-1 justify-center items-center">
-          {isError ? (
-            <p>Error fetching data</p>
-          ) : isLoading ? (
-            <p>Data is loading</p>
-          ) : data.length === 0 ? (
+          {data.length === 0 ? (
             <EmptyCart navigate={navigate} setCartIsOpened={setCartIsOpened} />
           ) : (
-            <FilledCart navigate={navigate} setCartIsOpened={setCartIsOpened} />
+            <FilledCart
+              navigate={navigate}
+              setCartIsOpened={setCartIsOpened}
+              cartData={data}
+            />
           )}
         </div>
       </div>

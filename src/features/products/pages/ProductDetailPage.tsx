@@ -15,7 +15,7 @@ import { useAuth } from "../../../hooks/useAuth";
 const ProductDetailPage = () => {
   const { id } = useParams<{ id: string }>();
 
-  const { user } = useAuth();
+  const { token } = useAuth();
 
   const [chosenSize, setChosenSize] = useState("");
   const [chosenQuantity, setChosenQuantity] = useState<null | number>(null);
@@ -76,7 +76,13 @@ const ProductDetailPage = () => {
             />
           </div>
           {/* button */}
-          <AddToCardButton user={user} />
+          <AddToCardButton
+            user={token}
+            productId={data!.id.toString()}
+            chosenSize={chosenSize}
+            chosenColor={chosenColor}
+            chosenQuantity={chosenQuantity}
+          />
           <hr className="border border-Grey-2" />
           {/* details */}
           <ProductDetails

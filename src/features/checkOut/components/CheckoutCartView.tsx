@@ -1,14 +1,9 @@
-import type { NavigateFunction } from "react-router-dom";
-import CartItemCard from "./CartItemCard";
+import CartItemCard from "../../../components/CartItemCard";
 
-const FilledCart = ({
-  navigate,
-  setCartIsOpened,
-  cartData,
+const CheckoutCartView = ({
+  data,
 }: {
-  navigate: NavigateFunction;
-  setCartIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
-  cartData: {
+  data: {
     id: number;
     color: string;
     quantity: number;
@@ -18,19 +13,16 @@ const FilledCart = ({
     cover_image: string;
   }[];
 }) => {
-  console.log(cartData);
-
   const deliveryFee = 5;
 
-  const subTotal = cartData.reduce((acc, prev) => prev.total_price + acc, 0);
+  const subTotal = data.reduce((acc, prev) => prev.total_price + acc, 0);
 
   const total = deliveryFee + subTotal;
-
   return (
-    <div className="flex flex-col flex-1 justify-between items-center mt-[63px] w-full">
+    <div className="flex flex-col flex-1 items-center gap-[81px] max-w-[460px]">
       {/* cart items section */}
       <div className="flex flex-col gap-9 w-full max-h-[calc(100vh-410px)] overflow-y-auto">
-        {cartData.map((item) => (
+        {data.map((item) => (
           <CartItemCard
             key={item.id + item.color}
             color={item.color}
@@ -58,18 +50,15 @@ const FilledCart = ({
             <span>$ {total}</span>
           </div>
         </div>
-        <button
-          onClick={() => {
-            navigate("/order");
-            setCartIsOpened(false);
-          }}
-          className="bg-Red mt-[58px] px-5 py-4 rounded-[10px] w-full text-white text-sm cursor-pointer"
-        >
-          Go to checkout
-        </button>
       </div>
+      <button
+        type="submit"
+        className="bg-Red px-5 py-4 rounded-[10px] w-full text-white text-sm cursor-pointer"
+      >
+        Pay
+      </button>
     </div>
   );
 };
 
-export default FilledCart;
+export default CheckoutCartView;
