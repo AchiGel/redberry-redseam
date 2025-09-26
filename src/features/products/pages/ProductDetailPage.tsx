@@ -30,8 +30,6 @@ const ProductDetailPage = () => {
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Failed to load product</div>;
 
-  console.log(data);
-
   return (
     <div className="flex flex-col">
       <span className="mt-[30px] mb-[49px] font-light text-Dark-blue text-sm">

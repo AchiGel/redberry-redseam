@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import EmptyCart from "./EmptyCart";
 import FilledCart from "./FilledCart";
+import { useQuery } from "@tanstack/react-query";
+import { getCartItems } from "../features/products/services/cartApi";
+import { useAuth } from "../hooks/useAuth";
 
 const CartModal = ({
   setCartIsOpened,
@@ -8,7 +11,14 @@ const CartModal = ({
   setCartIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const navigate = useNavigate();
-  const cartIsEmpty = true;
+
+  const { token } = useAuth();
+
+  const { data, isError, isLoading } = useQuery({
+    queryKey: ["cartData"],
+    queryFn: () => getCartItems(token),
+  });
+
   return (
     <div
       onClick={() => setCartIsOpened(false)}
@@ -30,7 +40,11 @@ const CartModal = ({
           </button>
         </div>
         <div className="flex flex-col flex-1 justify-center items-center">
-          {!cartIsEmpty ? (
+          {isError ? (
+            <p>Error fetching data</p>
+          ) : isLoading ? (
+            <p>Data is loading</p>
+          ) : data.length === 0 ? (
             <EmptyCart navigate={navigate} setCartIsOpened={setCartIsOpened} />
           ) : (
             <FilledCart navigate={navigate} setCartIsOpened={setCartIsOpened} />
