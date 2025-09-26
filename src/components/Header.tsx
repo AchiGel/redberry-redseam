@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import CartModal from "./CartModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 
 const Header = () => {
@@ -8,8 +8,20 @@ const Header = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (cartIsOpened) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [cartIsOpened]);
+
   return (
-    <header className="relative flex justify-between items-center px-25 py-[10px] h-20">
+    <header className="relative flex justify-between items-center mx-auto px-25 py-[10px] max-w-[1920px] h-20">
       {/* Logo */}
       <Link to={"/"}>
         <div className="flex items-center gap-1">
@@ -31,11 +43,19 @@ const Header = () => {
             onClick={logout}
             className="flex items-center gap-1 cursor-pointer"
           >
-            <div className="bg-Dark-blue-2 rounded-full w-10 h-10 overflow-hidden">
+            <div className="rounded-full w-10 h-10 overflow-hidden">
               {user.avatar ? (
-                <img src={user.avatar} alt="user avatar" />
+                <img
+                  src={user.avatar}
+                  alt="user avatar"
+                  className="w-full h-full object-contain"
+                />
               ) : (
-                <></>
+                <img
+                  src="/images/Union.svg"
+                  alt="user avatar"
+                  className="w-full h-full object-contain"
+                />
               )}
             </div>
             <img src="/images/chevron-down.svg" alt="arrow" />

@@ -135,7 +135,7 @@ const RegisterPage = () => {
                 e.preventDefault();
                 setIsVisible((prev) => !prev);
               }}
-              className="top-1/2 right-0 absolute -translate-1/2"
+              className="top-1/2 right-0 absolute -translate-1/2 cursor-pointer"
             >
               <img src="/images/eye.svg" alt="" />
             </button>
@@ -170,7 +170,7 @@ const RegisterPage = () => {
                 e.preventDefault();
                 setIsVisible((prev) => !prev);
               }}
-              className="top-1/2 right-0 absolute -translate-1/2"
+              className="top-1/2 right-0 absolute -translate-1/2 cursor-pointer"
             >
               <img src="/images/eye.svg" alt="" />
             </button>
