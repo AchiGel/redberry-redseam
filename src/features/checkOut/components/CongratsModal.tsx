@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
+
 const CongratsModal = ({
   setCongratsModalIsOpened,
 }: {
   setCongratsModalIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const navigate = useNavigate();
   return (
     <div
       onClick={() => setCongratsModalIsOpened(false)}
@@ -28,7 +31,10 @@ const CongratsModal = ({
               Your order is placed successfully!
             </p>
           </div>
-          <button className="bg-Red px-5 py-4 rounded-[10px] w-[214px] text-white text-sm cursor-pointer">
+          <button
+            onClick={() => navigate("/")}
+            className="bg-Red px-5 py-4 rounded-[10px] w-[214px] text-white text-sm cursor-pointer"
+          >
             Continue shopping
           </button>
         </div>

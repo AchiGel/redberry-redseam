@@ -51,11 +51,13 @@ const CheckOutPage = () => {
         zip_code: formData.zip_code,
       });
       console.log(response);
+      if (
+        response.message === "Checkout successful. Thank you for your purchase!"
+      )
+        setCongratsModalIsOpened(true);
     } catch (error) {
       console.error(error);
       alert("Checkout failed");
-    } finally {
-      setCongratsModalIsOpened((prev) => !prev);
     }
   };
 
