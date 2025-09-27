@@ -3,16 +3,26 @@ const HeadingSortSection = ({
   sortIsOpened,
   setSortIsOpened,
   setSort,
+  sort,
 }: {
   setFilterIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
   sortIsOpened: boolean;
   setSortIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
   setSort: (newSort: string | undefined) => void;
+  sort: string | undefined;
 }) => {
   const handleSelect = (value: string) => {
     setSort(value);
     setSortIsOpened(false);
   };
+
+  const sortLabel =
+    sort === "price"
+      ? "Price, low to high"
+      : sort === "-price"
+      ? "Price, high to low"
+      : "Sort by";
+
   return (
     <div className="relative">
       <button
@@ -22,7 +32,8 @@ const HeadingSortSection = ({
         }}
         className="flex items-center gap-1 cursor-pointer"
       >
-        <span className="text-Dark-blue">Sort by</span>
+        {/* here in span i want "Sort by" if no sorts are chosen, but sort value if something is chosen */}
+        <span className="text-Dark-blue">{sortLabel}</span>
         <img
           src="/images/chevron-down.svg"
           alt=""
@@ -32,17 +43,19 @@ const HeadingSortSection = ({
       {sortIsOpened && (
         <div className="top-[36.5px] right-0 absolute flex flex-col gap-2 bg-white p-4 border border-Grey-2 rounded-lg w-[223px]">
           <h3 className="font-semibold text-Dark-blue text-base">Sort by</h3>
-          <div className="flex flex-col">
-            <button className="py-2 text-Dark-blue">New products first</button>
+          <div className="flex flex-col items-start">
+            <button className="py-2 text-Dark-blue cursor-pointer">
+              New products first
+            </button>
             <button
               onClick={() => handleSelect("price")}
-              className="py-2 text-Dark-blue"
+              className="py-2 text-Dark-blue cursor-pointer"
             >
               Price, low to high
             </button>
             <button
               onClick={() => handleSelect("-price")}
-              className="py-2 text-Dark-blue"
+              className="py-2 text-Dark-blue cursor-pointer"
             >
               Price, high to low
             </button>

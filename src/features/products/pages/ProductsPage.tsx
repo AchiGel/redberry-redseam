@@ -6,6 +6,7 @@ import Pagination from "../../../components/Pagination";
 import { useState } from "react";
 import type { ProductsResponse } from "../../../types/types";
 import { useSearchParams } from "react-router-dom";
+import FilterChip from "../components/FilterChip";
 
 const ProductsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -87,6 +88,19 @@ const ProductsPage = () => {
         filters={filters}
         setFilters={handleFiltersChange}
       />
+      {filters.price_from !== undefined || filters.price_to !== undefined ? (
+        <FilterChip
+          label={`Price: ${filters.price_from ?? "Any"}-${
+            filters.price_to ?? "Any"
+          }`}
+          onRemove={() =>
+            handleFiltersChange({
+              price_from: undefined,
+              price_to: undefined,
+            })
+          }
+        />
+      ) : null}
       <ProductsGrid products={data!} />
       <Pagination meta={data!.meta} onPageChange={handlePageChange} />
     </div>

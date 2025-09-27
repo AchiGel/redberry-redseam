@@ -8,6 +8,7 @@ const ProductsHeading = ({
   to,
   filterIsOpened,
   setFilterIsOpened,
+  sort,
   sortIsOpened,
   setSortIsOpened,
   setSort,
@@ -36,6 +37,7 @@ const ProductsHeading = ({
           sortIsOpened={sortIsOpened}
           setSortIsOpened={setSortIsOpened}
           setSort={setSort}
+          sort={sort}
         />
       </div>
     </div>
