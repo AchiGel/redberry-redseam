@@ -2,12 +2,19 @@ import { Link, useNavigate } from "react-router-dom";
 import CartModal from "./CartModal";
 import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import { getCartItems } from "../features/products/services/cartApi";
 
 const Header = () => {
   const [cartIsOpened, setCartIsOpened] = useState(false);
   const [logOutDropIsOpened, setLogOutDrowIsOpened] = useState(false);
-  const { user, logout } = useAuth();
+  const { user, logout, token } = useAuth();
   const navigate = useNavigate();
+
+  const { data, isError, isLoading } = useQuery({
+    queryKey: ["cartData"],
+    queryFn: () => getCartItems(token),
+  });
 
   useEffect(() => {
     if (cartIsOpened) {
@@ -35,10 +42,15 @@ const Header = () => {
       {user ? (
         <div className="flex items-center gap-5">
           <button
-            className="cursor-pointer"
+            className="relative cursor-pointer"
             onClick={() => setCartIsOpened((prev) => !prev)}
           >
             <img src="/images/shopping-cart-icon.svg" alt="shoppin cart icon" />
+            {data && data.length > 0 ? (
+              <span className="-top-3 -right-3 absolute bg-Red px-[6px] py-[2px] rounded-full text-white text-xs">
+                {data.length}
+              </span>
+            ) : null}
           </button>
           <button
             onClick={() => setLogOutDrowIsOpened((prev) => !prev)}
@@ -72,7 +84,15 @@ const Header = () => {
         </button>
       )}
 
-      {cartIsOpened && <CartModal setCartIsOpened={setCartIsOpened} />}
+      {cartIsOpened && (
+        <CartModal
+          data={data}
+          isLoading={isLoading}
+          isError={isError}
+          setCartIsOpened={setCartIsOpened}
+          token={token}
+        />
+      )}
       {logOutDropIsOpened && (
         <div className="top-20 right-25 absolute p-4 border border-Grey-2 rounded-lg">
           <button

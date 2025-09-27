@@ -1,23 +1,22 @@
 import { useNavigate } from "react-router-dom";
 import EmptyCart from "./EmptyCart";
 import FilledCart from "./FilledCart";
-import { useQuery } from "@tanstack/react-query";
-import { getCartItems } from "../features/products/services/cartApi";
-import { useAuth } from "../hooks/useAuth";
+import type { ProductTypes } from "../types/types";
 
 const CartModal = ({
   setCartIsOpened,
+  data,
+  isError,
+  isLoading,
+  token,
 }: {
   setCartIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  data: ProductTypes[];
+  isLoading: boolean;
+  isError: boolean;
+  token: string | null;
 }) => {
   const navigate = useNavigate();
-
-  const { token } = useAuth();
-
-  const { data, isError, isLoading } = useQuery({
-    queryKey: ["cartData"],
-    queryFn: () => getCartItems(token),
-  });
 
   if (isLoading)
     return <div className="top-0 right-0 z-20 absolute">Is Loading</div>;
