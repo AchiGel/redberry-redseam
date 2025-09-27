@@ -1,3 +1,4 @@
+import type { FieldValues } from "react-hook-form";
 import { API_URL } from "../../../main";
 
 export const getCartItems = async (token: string | null) => {
@@ -86,16 +87,7 @@ export const deleteCartItems = async (token: string | null, id: number) => {
   return response.json();
 };
 
-export const cartCheckout = async (
-  token: string | null,
-  data: {
-    name: string;
-    surname: string;
-    email: string;
-    zip_code: string;
-    address: string;
-  }
-) => {
+export const cartCheckout = async (token: string | null, data: FieldValues) => {
   if (!token) throw new Error("Token is required");
 
   const response = await fetch(`${API_URL}/cart/checkout`, {

@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "../../../hooks/useAuth";
 import CheckoutCartView from "../components/CheckoutCartView";
 import CheckoutForm from "../components/CheckoutForm";
@@ -8,13 +8,15 @@ import { useEffect, useState } from "react";
 import CongratsModal from "../components/CongratsModal";
 
 const CheckOutPage = () => {
-  const [congratsModalIsOpened, setCongratsModalIsOpened] = useState(false);
   const { token } = useAuth();
+  const queryClient = useQueryClient();
+  const [congratsModalIsOpened, setCongratsModalIsOpened] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
   useEffect(() => {
@@ -34,31 +36,43 @@ const CheckOutPage = () => {
     queryFn: () => getCartItems(token),
   });
 
-  if (isLoading)
+  const {
+    mutate: checkout,
+    isPending: isCheckoutLoading,
+    isError: isCheckoutError,
+  } = useMutation({
+    mutationFn: (formData: FieldValues) => cartCheckout(token, formData),
+    onSuccess: (response) => {
+      if (
+        response.message === "Checkout successful. Thank you for your purchase!"
+      ) {
+        reset();
+        setCongratsModalIsOpened(true);
+        queryClient.invalidateQueries({ queryKey: ["cartData"] });
+      }
+    },
+    onError: (error) => {
+      console.error(error);
+      alert("Checkout failed");
+    },
+  });
+
+  const onSubmit: SubmitHandler<FieldValues> = (formData) => {
+    checkout({
+      name: formData.name,
+      surname: formData.surname,
+      email: formData.email,
+      address: formData.address,
+      zip_code: formData.zip_code,
+    });
+  };
+
+  if (isLoading || isCheckoutLoading)
     return <div className="top-0 right-0 z-20 absolute">Is Loading</div>;
-  if (isError)
+  if (isError || isCheckoutError)
     return (
       <div className="top-0 right-0 z-20 absolute">Error fetching data</div>
     );
-
-  const onSubmit: SubmitHandler<FieldValues> = async (formData) => {
-    try {
-      const response = await cartCheckout(token, {
-        name: formData.name,
-        surname: formData.surname,
-        email: formData.email,
-        address: formData.address,
-        zip_code: formData.zip_code,
-      });
-      if (
-        response.message === "Checkout successful. Thank you for your purchase!"
-      )
-        setCongratsModalIsOpened(true);
-    } catch (error) {
-      console.error(error);
-      alert("Checkout failed");
-    }
-  };
 
   return (
     <div className="relative mt-18">
