@@ -9,7 +9,7 @@ const CheckoutForm = ({
   errors,
 }: {
   register: UseFormRegister<FieldValues>;
-  errors: FieldErrors<FieldValues>;
+  errors: FieldErrors<FieldErrors>;
 }) => {
   return (
     <section className="flex-1 bg-Grey mr-[131px] px-[47px] py-[72px] rounded-2xl">
@@ -121,16 +121,8 @@ const CheckoutForm = ({
             {...register("zip_code", {
               required: "Zip code is required",
               pattern: {
-                value: /^[0-9]+$/,
-                message: "Zip code must contain numbers only",
-              },
-              minLength: {
-                value: 4,
-                message: "Zip code must be at least 4 digits",
-              },
-              maxLength: {
-                value: 10,
-                message: "Zip code must not exceed 10 digits",
+                value: /^[0-9]{4}$/,
+                message: "Zip code must be exactly 4 digits",
               },
             })}
           />
