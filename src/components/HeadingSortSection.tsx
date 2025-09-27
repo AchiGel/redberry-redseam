@@ -34,7 +34,6 @@ const HeadingSortSection = ({
         }}
         className="flex items-center gap-1 cursor-pointer"
       >
-        {/* here in span i want "Sort by" if no sorts are chosen, but sort value if something is chosen */}
         <span className="text-Dark-blue">{sortLabel}</span>
         <img
           src="/images/chevron-down.svg"
