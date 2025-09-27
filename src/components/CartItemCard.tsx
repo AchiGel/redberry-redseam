@@ -1,5 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteCartItems } from "../features/products/services/cartApi";
+import {
+  deleteCartItems,
+  patchCartItems,
+} from "../features/products/services/cartApi";
+import { useState } from "react";
 
 const CartItemCard = (itemData: {
   id?: number;
@@ -12,6 +16,8 @@ const CartItemCard = (itemData: {
   token: string | null;
 }) => {
   const queryClient = useQueryClient();
+
+  const [quantity, setQuantity] = useState(itemData.quantity);
 
   const { mutate: removeItem } = useMutation({
     mutationFn: () => {
@@ -28,6 +34,35 @@ const CartItemCard = (itemData: {
       alert("Something went wrong while deleting the item.");
     },
   });
+
+  const { mutate: updateQuantity } = useMutation({
+    mutationFn: (newQuantity: number) => {
+      if (!itemData.token || itemData.id === undefined) {
+        throw new Error("Token not provided or item does not exist");
+      }
+      return patchCartItems(itemData.token, itemData.id, newQuantity);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cartData"] });
+    },
+    onError: () => {
+      alert("Failed to update quantity.");
+    },
+  });
+
+  const handleDecrease = () => {
+    if (quantity > 1) {
+      const newQuantity = quantity - 1;
+      setQuantity(newQuantity);
+      updateQuantity(newQuantity);
+    }
+  };
+
+  const handleIncrease = () => {
+    const newQuantity = quantity + 1;
+    setQuantity(newQuantity);
+    updateQuantity(newQuantity);
+  };
 
   return (
     <div className="flex gap-[17px]">
@@ -51,11 +86,11 @@ const CartItemCard = (itemData: {
         </div>
         <div className="flex justify-between items-center w-full">
           <div className="flex items-center gap-[2px] px-2 py-1 border border-Grey-2 rounded-[22px] text-Dark-blue-2 text-xs">
-            <button className="cursor-pointer">
+            <button onClick={handleDecrease} className="cursor-pointer">
               <img src="/images/minus.svg" alt="minus" />
             </button>
-            <span className="px-2">{itemData.quantity}</span>
-            <button className="cursor-pointer">
+            <span className="px-2">{quantity}</span>
+            <button onClick={handleIncrease} className="cursor-pointer">
               <img src="/images/plus.svg" alt="plus" />
             </button>
           </div>

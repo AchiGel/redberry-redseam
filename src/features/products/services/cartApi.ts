@@ -43,7 +43,7 @@ export const postCartItems = async (
 
 export const patchCartItems = async (
   token: string | null,
-  id: string,
+  id: number,
   quantity: number
 ) => {
   if (!token) throw new Error("Token is required");
