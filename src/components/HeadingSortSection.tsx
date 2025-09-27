@@ -21,6 +21,8 @@ const HeadingSortSection = ({
       ? "Price, low to high"
       : sort === "-price"
       ? "Price, high to low"
+      : sort === "created_at"
+      ? "New products first"
       : "Sort by";
 
   return (
@@ -44,7 +46,10 @@ const HeadingSortSection = ({
         <div className="top-[36.5px] right-0 absolute flex flex-col gap-2 bg-white p-4 border border-Grey-2 rounded-lg w-[223px]">
           <h3 className="font-semibold text-Dark-blue text-base">Sort by</h3>
           <div className="flex flex-col items-start">
-            <button className="py-2 text-Dark-blue cursor-pointer">
+            <button
+              onClick={() => handleSelect("created_at")}
+              className="py-2 text-Dark-blue cursor-pointer"
+            >
               New products first
             </button>
             <button
