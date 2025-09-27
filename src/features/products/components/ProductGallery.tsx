@@ -28,7 +28,7 @@ const ProductGallery = ({
             return (
               <div
                 key={index}
-                className="w-full h-[161px]"
+                className="w-full h-[161px] cursor-pointer"
                 onClick={() => relatedColor && setChosenColor(relatedColor)}
               >
                 <img

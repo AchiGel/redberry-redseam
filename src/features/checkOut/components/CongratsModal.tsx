@@ -8,20 +8,26 @@ const CongratsModal = ({
   const navigate = useNavigate();
   return (
     <div
-      onClick={() => setCongratsModalIsOpened(false)}
-      className="top-0 -right-25 -bottom-50 -left-25 absolute flex justify-center items-center bg-Dark-blue/30 min-w-screen min-h-screen"
+      onClick={() => {
+        setCongratsModalIsOpened(false);
+        navigate("/");
+      }}
+      className="top-0 right-0 bottom-0 left-0 absolute flex justify-center items-center bg-Dark-blue/30 min-w-screen h-screen"
     >
       <div
         onClick={(e) => e.stopPropagation()}
         className="flex flex-col bg-white p-[30px] w-[876px] h-[590px]"
       >
         <button
-          onClick={() => setCongratsModalIsOpened(false)}
+          onClick={() => {
+            setCongratsModalIsOpened(false);
+            navigate("/");
+          }}
           className="self-end cursor-pointer"
         >
           <img src="/images/close.svg" alt="" />
         </button>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col flex-1 justify-center items-center">
           <div className="flex flex-col items-center mb-[74px]">
             <img className="mb-10" src="/images/congrats.svg" alt="" />
             <h2 className="mb-4 font-semibold text-[42px] text-Dark-blue">

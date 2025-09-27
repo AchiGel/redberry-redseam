@@ -50,7 +50,7 @@ const ProductQuantity = ({
             <button
               key={qty}
               onClick={() => handleSelect(qty)}
-              className="hover:bg-Grey-1 px-4 py-2 w-full text-Dark-blue/80 text-left"
+              className="hover:bg-Grey-1 px-4 py-2 w-full text-Dark-blue/80 text-left cursor-pointer"
             >
               {qty}
             </button>

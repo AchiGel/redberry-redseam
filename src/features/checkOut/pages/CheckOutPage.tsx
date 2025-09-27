@@ -75,7 +75,7 @@ const CheckOutPage = () => {
     );
 
   return (
-    <div className="relative mt-18">
+    <div className="mt-18">
       <h1 className="mb-[42px] font-semibold text-[42px] text-Dark-blue">
         Checkout
       </h1>

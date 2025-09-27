@@ -29,7 +29,7 @@ const ProductColors = ({
             <button
               key={color}
               onClick={() => setChosenColor(color)}
-              className={`w-12 h-12 rounded-full bg-white p-[5px] border  overflow-hidden ${
+              className={`w-12 h-12 rounded-full bg-white p-[5px] border cursor-pointer overflow-hidden ${
                 chosenColor === color ? "border-Grey-2" : "border-none"
               }`}
             >

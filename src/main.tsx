@@ -15,8 +15,11 @@ import ProductsPage from "./features/products/pages/ProductsPage.tsx";
 import { AuthProvider } from "./providers/AuthProvider.tsx";
 import ProductDetailPage from "./features/products/pages/ProductDetailPage.tsx";
 import CheckOutPage from "./features/checkOut/pages/CheckOutPage.tsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export const API_URL = "https://api.redseam.redberryinternship.ge/api";
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,8 +40,10 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </QueryClientProvider>
   </StrictMode>
 );
