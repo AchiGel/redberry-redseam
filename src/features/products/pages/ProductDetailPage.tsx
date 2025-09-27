@@ -18,7 +18,7 @@ const ProductDetailPage = () => {
   const { token } = useAuth();
 
   const [chosenSize, setChosenSize] = useState("");
-  const [chosenQuantity, setChosenQuantity] = useState<null | number>(null);
+  const [chosenQuantity, setChosenQuantity] = useState<null | number>(1);
   const [chosenColor, setChosenColor] = useState("");
 
   const { data, isLoading, isError } = useQuery<ProductTypes>({

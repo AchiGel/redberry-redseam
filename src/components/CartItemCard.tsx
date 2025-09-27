@@ -1,3 +1,6 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteCartItems } from "../features/products/services/cartApi";
+
 const CartItemCard = (itemData: {
   id?: number;
   color: string;
@@ -6,7 +9,26 @@ const CartItemCard = (itemData: {
   name: string;
   size: string;
   cover_image: string;
+  token: string | null;
 }) => {
+  const queryClient = useQueryClient();
+
+  const { mutate: removeItem } = useMutation({
+    mutationFn: () => {
+      if (!itemData.token || itemData.id === undefined) {
+        throw new Error("Token not provided or item does not exist");
+      }
+      return deleteCartItems(itemData.token, itemData.id);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cartData"] });
+      alert("Item deleted successfully!");
+    },
+    onError: () => {
+      alert("Something went wrong while deleting the item.");
+    },
+  });
+
   return (
     <div className="flex gap-[17px]">
       <div className="border border-Grey-2 rounded-[10px] w-[100px] aspect-50/67 overflow-hidden">
@@ -37,7 +59,10 @@ const CartItemCard = (itemData: {
               <img src="/images/plus.svg" alt="plus" />
             </button>
           </div>
-          <button className="text-Dark-blue-2 text-xs cursor-pointer">
+          <button
+            onClick={() => removeItem()}
+            className="text-Dark-blue-2 text-xs cursor-pointer"
+          >
             Remove
           </button>
         </div>

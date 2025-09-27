@@ -41,7 +41,7 @@ const Header = () => {
             <img src="/images/shopping-cart-icon.svg" alt="shoppin cart icon" />
           </button>
           <button
-            onClick={() => setLogOutDrowIsOpened(true)}
+            onClick={() => setLogOutDrowIsOpened((prev) => !prev)}
             className="flex items-center gap-1 cursor-pointer"
           >
             <div className="rounded-full w-10 h-10 overflow-hidden">

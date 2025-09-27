@@ -50,7 +50,6 @@ const CheckOutPage = () => {
         address: formData.address,
         zip_code: formData.zip_code,
       });
-      console.log(response);
       if (
         response.message === "Checkout successful. Thank you for your purchase!"
       )

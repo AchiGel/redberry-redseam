@@ -54,6 +54,7 @@ const CartModal = ({
               navigate={navigate}
               setCartIsOpened={setCartIsOpened}
               cartData={data}
+              token={token}
             />
           )}
         </div>

@@ -64,7 +64,7 @@ export const patchCartItems = async (
   return response.json();
 };
 
-export const deleteCartItems = async (token: string | null, id: string) => {
+export const deleteCartItems = async (token: string | null, id: number) => {
   if (!token) throw new Error("Token is required");
 
   const response = await fetch(`${API_URL}/cart/products/${id}`, {
@@ -77,6 +77,10 @@ export const deleteCartItems = async (token: string | null, id: string) => {
 
   if (!response.ok) {
     throw new Error(`Failed to delete cart item: ${response.status}`);
+  }
+
+  if (response.status === 204) {
+    return null;
   }
 
   return response.json();

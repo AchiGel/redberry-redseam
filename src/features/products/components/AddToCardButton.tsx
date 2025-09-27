@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { postCartItems } from "../services/cartApi";
-import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface AddToCardButtonProps {
   user: string | null;
@@ -19,42 +19,42 @@ const AddToCardButton = ({
 }: AddToCardButtonProps) => {
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(false);
+  const queryClient = useQueryClient();
 
-  const handleAddToCart = async () => {
-    if (!user) {
-      navigate("/login");
-      return;
-    }
-    if (!chosenQuantity || !chosenSize || !chosenColor) {
-      alert("Please select size, color, and quantity");
-      return;
-    }
+  const { mutate, isPending } = useMutation({
+    mutationFn: () => {
+      if (!user) throw new Error("Not logged in");
+      if (!chosenQuantity || !chosenSize || !chosenColor) {
+        throw new Error("Missing required fields");
+      }
 
-    setLoading(true);
-    try {
-      const data = await postCartItems(user, productId, {
+      return postCartItems(user, productId, {
         quantity: chosenQuantity,
         size: chosenSize,
         color: chosenColor,
       });
-      console.log("Added to cart:", data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cartData"] });
       alert("Product added to cart!");
-    } catch (error) {
+    },
+    onError: (error) => {
       console.error(error);
-      alert("Failed to add to cart");
-    } finally {
-      setLoading(false);
-    }
-  };
+      if (error.message === "Not logged in") {
+        navigate("/login");
+      } else {
+        alert("Failed to add to cart");
+      }
+    },
+  });
 
   return (
     <button
-      onClick={handleAddToCart}
+      onClick={() => mutate()}
       className="flex justify-center items-center gap-[10px] bg-Red py-4 rounded-[10px] font-medium text-white text-lg cursor-pointer"
     >
       <img src="/images/shopping-cart.svg" alt="cart" />
-      {loading ? "Adding..." : "Add to Cart"}
+      {isPending ? "Adding..." : "Add to Cart"}
     </button>
   );
 };

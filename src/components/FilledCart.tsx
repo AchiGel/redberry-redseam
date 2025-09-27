@@ -5,6 +5,7 @@ const FilledCart = ({
   navigate,
   setCartIsOpened,
   cartData,
+  token,
 }: {
   navigate: NavigateFunction;
   setCartIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,9 +18,8 @@ const FilledCart = ({
     size: string;
     cover_image: string;
   }[];
+  token: string | null;
 }) => {
-  console.log(cartData);
-
   const deliveryFee = 5;
 
   const subTotal = cartData.reduce((acc, prev) => prev.total_price + acc, 0);
@@ -39,6 +39,8 @@ const FilledCart = ({
             name={item.name}
             total_price={item.total_price}
             cover_image={item.cover_image}
+            token={token}
+            id={item.id}
           />
         ))}
       </div>
