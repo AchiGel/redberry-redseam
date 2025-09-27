@@ -7,7 +7,7 @@ const AvatarUploader = ({
   avatar: File | null;
   setAvatar: React.Dispatch<React.SetStateAction<File | null>>;
 }) => {
-  const [preview, setPreview] = useState<string | null>("/images/avatar.png");
+  const [preview, setPreview] = useState<string | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -24,12 +24,20 @@ const AvatarUploader = ({
   return (
     <div className="flex items-center gap-[15px] w-full">
       {/* Preview */}
-      {preview && (
+      {preview ? (
         <img
           src={preview}
           alt="avatar preview"
           className="rounded-full w-25 h-25 object-cover"
         />
+      ) : (
+        <div className="flex justify-center items-center border border-Grey-2 rounded-full w-25 h-25 overflow-hidden">
+          <img
+            src="/images/camera.svg"
+            alt="camera icon"
+            className="w-5 h-5 object-contain"
+          />
+        </div>
       )}
 
       {/* Upload new */}

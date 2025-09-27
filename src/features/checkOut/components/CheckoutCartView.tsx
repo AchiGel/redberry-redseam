@@ -2,6 +2,7 @@ import CartItemCard from "../../../components/CartItemCard";
 
 const CheckoutCartView = ({
   data,
+  token,
 }: {
   data: {
     id: number;
@@ -12,6 +13,7 @@ const CheckoutCartView = ({
     size: string;
     cover_image: string;
   }[];
+  token: string | null;
 }) => {
   const deliveryFee = 5;
 
@@ -24,6 +26,7 @@ const CheckoutCartView = ({
       <div className="flex flex-col gap-9 w-full max-h-[calc(100vh-410px)] overflow-y-auto">
         {data.map((item) => (
           <CartItemCard
+            token={token}
             key={item.id + item.color}
             color={item.color}
             quantity={item.quantity}

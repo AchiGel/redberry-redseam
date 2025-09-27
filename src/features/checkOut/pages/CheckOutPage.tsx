@@ -81,7 +81,7 @@ const CheckOutPage = () => {
       </h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex justify-between">
         <CheckoutForm register={register} errors={errors} />
-        <CheckoutCartView data={data} />
+        <CheckoutCartView data={data} token={token} />
       </form>
       {congratsModalIsOpened && (
         <CongratsModal setCongratsModalIsOpened={setCongratsModalIsOpened} />
