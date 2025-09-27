@@ -5,6 +5,7 @@ import { useAuth } from "../hooks/useAuth";
 
 const Header = () => {
   const [cartIsOpened, setCartIsOpened] = useState(false);
+  const [logOutDropIsOpened, setLogOutDrowIsOpened] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -21,7 +22,7 @@ const Header = () => {
   }, [cartIsOpened]);
 
   return (
-    <header className="relative flex justify-between items-center mx-auto px-25 py-[10px] max-w-[1920px] h-20">
+    <header className="relative flex justify-between items-center mx-auto px-25 py-[10px] w-full max-w-[1920px] h-20">
       {/* Logo */}
       <Link to={"/"}>
         <div className="flex items-center gap-1">
@@ -40,7 +41,7 @@ const Header = () => {
             <img src="/images/shopping-cart-icon.svg" alt="shoppin cart icon" />
           </button>
           <button
-            onClick={logout}
+            onClick={() => setLogOutDrowIsOpened(true)}
             className="flex items-center gap-1 cursor-pointer"
           >
             <div className="rounded-full w-10 h-10 overflow-hidden">
@@ -72,6 +73,19 @@ const Header = () => {
       )}
 
       {cartIsOpened && <CartModal setCartIsOpened={setCartIsOpened} />}
+      {logOutDropIsOpened && (
+        <div className="top-20 right-25 absolute p-4 border border-Grey-2 rounded-lg">
+          <button
+            className="bg-Red px-3 py-[10px] rounded-[10px] text-white cursor-pointer"
+            onClick={() => {
+              logout();
+              setLogOutDrowIsOpened(false);
+            }}
+          >
+            Log out
+          </button>
+        </div>
+      )}
     </header>
   );
 };
