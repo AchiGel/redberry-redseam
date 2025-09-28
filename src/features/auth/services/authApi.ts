@@ -3,6 +3,8 @@ import type {
   LoginData,
   AuthResponse,
   RegisterData,
+  ValidationErrors,
+  ApiError,
 } from "../../../types/types";
 
 export const loginApi = async (data: LoginData): Promise<AuthResponse> => {
@@ -15,8 +17,7 @@ export const loginApi = async (data: LoginData): Promise<AuthResponse> => {
   });
 
   if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Login failed");
+    throw new Error("Incorrect Email or Password");
   }
 
   return await response.json();
@@ -34,12 +35,25 @@ export const registerApi = async (
 
   const response = await fetch(`${API_URL}/register`, {
     method: "POST",
+    headers: {
+      Accept: "application/json",
+    },
     body: formData,
   });
 
   if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Registration failed");
+    let errorData: { message?: string; errors?: ValidationErrors } = {};
+    try {
+      errorData = await response.json();
+    } catch {
+      errorData = { message: "Registration failed" };
+    }
+    const error: ApiError = new Error(
+      errorData.message || "Registration failed"
+    );
+    error.status = response.status;
+    error.errors = errorData.errors;
+    throw error;
   }
 
   return await response.json();

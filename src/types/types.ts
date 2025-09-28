@@ -133,3 +133,17 @@ export type PaginationProps = {
   };
   onPageChange: (page: number) => void;
 };
+
+export interface ValidationErrors {
+  email?: string[];
+  username?: string[];
+  password?: string[];
+  password_confirmation?: string[];
+  avatar?: string[];
+  [key: string]: string[] | undefined;
+}
+
+export interface ApiError extends Error {
+  status?: number;
+  errors?: ValidationErrors;
+}

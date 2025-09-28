@@ -4,10 +4,12 @@ import { useState } from "react";
 import { registerApi } from "../services/authApi";
 import AvatarUploader from "../components/AvatarUploader";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
+import type { ApiError } from "../../../types/types";
 
 const RegisterPage = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [avatar, setAvatar] = useState<File | null>(null);
+  const [avatarError, setAvatarError] = useState("");
 
   const {
     register,
@@ -42,8 +44,14 @@ const RegisterPage = () => {
         navigate("/login");
       }
     } catch (error) {
-      console.error(error);
-      alert("Registration failed");
+      const err = error as ApiError;
+      if (err.status === 422 && err.errors) {
+        console.log("Validation errors:", err.errors);
+        alert("Validation failed: " + JSON.stringify(err.errors));
+      } else {
+        console.error(error);
+        alert(err.message || "Registration failed");
+      }
     }
   };
 
@@ -57,7 +65,12 @@ const RegisterPage = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         {/* Avatar */}
-        <AvatarUploader avatar={avatar} setAvatar={setAvatar} />
+        <AvatarUploader
+          avatar={avatar}
+          setAvatar={setAvatar}
+          avatarError={avatarError}
+          setAvatarError={setAvatarError}
+        />
 
         <div className="flex flex-col gap-6">
           {/* Username */}
