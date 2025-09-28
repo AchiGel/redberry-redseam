@@ -52,7 +52,7 @@ Clone the repository:
 
 ```js
 git clone https://github.com/AchiGel/redberry-redseam
-cd redberry-momentum
+cd redberry-redseam
 ```
 
 - Install dependencies:
