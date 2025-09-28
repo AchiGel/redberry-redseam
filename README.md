@@ -5,6 +5,36 @@ It includes authentication, product browsing, filters, sorting, cart management,
 
 ---
 
+## 🚀 Features
+
+- 🔐 Authentication
+
+User login & registration
+
+Protected routes with token-based access
+
+- 🛒 Cart System
+
+Add, remove, and update items
+
+Cart modal and cart counter in header
+
+- 💳 Checkout
+
+Checkout form with validations (powered by react-hook-form)
+
+Pre-filled user email field (editable)
+
+Congrats modal after successful purchase
+
+- 🔍 Filtering & Sorting
+
+Filter products by category, size, and color
+
+Sort products by newest, price, etc.
+
+- ⚡ Powered by Redberry API
+
 ## 🚀 Tech Stack
 
 - [React 19](https://react.dev/)
@@ -20,9 +50,25 @@ It includes authentication, product browsing, filters, sorting, cart management,
 
 Clone the repository:
 
-```bash
-git clone https://github.com/your-username/redberry_redseam_clothing.git
-cd redberry_redseam_clothing
+```js
+git clone https://github.com/AchiGel/redberry-redseam
+cd redberry-momentum
+```
+
+- Install dependencies:
+
+```js
 npm install
+```
+
+- Start the development server:
+
+```js
 npm run dev
 ```
+
+## 🖼️ Screenshot
+
+![Screenshot](/public/demo.png "Project Screenshot")
+
+## 🤝 Thanks For Your Interest
