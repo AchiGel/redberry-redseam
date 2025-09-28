@@ -34,6 +34,7 @@ const CheckoutCartView = ({
             name={item.name}
             total_price={item.total_price}
             cover_image={item.cover_image}
+            id={item.id}
           />
         ))}
       </div>
