@@ -69,6 +69,6 @@ npm run dev
 
 ## 🖼️ Screenshot
 
-![Screenshot](/public/demo.png "Project Screenshot")
+![Screenshot](/public/images/demo.png "Project Screenshot")
 
 ## 🤝 Thanks For Your Interest
